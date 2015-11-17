@@ -9,11 +9,14 @@
         <script src="js/settings.js"></script>
         <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" />
         <link rel="stylesheet" type="text/css" href="css/bootstrap-theme.min.css" />
+        <link rel="stylesheet" type="text/css" href="css/settings.css" />
     </head>
     <body>
+        <!--Body-->
         <div class="container-fluid">
             <div class="row">
                 <div class="col-lg-2">
+                    <!--Navigation-->
                     <nav class="bs-docs-sidebar affix">
                         <h3>Settings</h3>
                         <ul class="nav bs-docs-sidenav">
@@ -25,11 +28,15 @@
                             </li>
                         </ul>
                     </nav>
+                    <!--/Navigation-->
                 </div>
                 <div class="col-lg-6">
+                    <!--Settings-->
                     <div class="row" id="background">
                         <h1>Background</h1>
                         <input type="file" id="newBackground" accept="image/*" />
+                        <img id="backgroundPrev" src="" alt="" width="100" height="100" /><br />
+                        Background Color: <input id="backgroundColor" type="color" value="#FFFFFF" />
                     </div>
                     <div class="row" id="links">
                         <h1>Links...</h1>
@@ -37,12 +44,13 @@
                     </div>
                     <div class="row">
                         <div class="btn btn-primary" id="save">Save</div>
-                        <div class="btn btn-default" id="cancel" data-toggle="modal" data-target="#saveChanges">Cancel</div>
+                        <div class="btn btn-default" id="cancel" data-toggle="modal" data-target="#saveChanges">Close</div>
                     </div>
+                    <!--/Settings-->
                 </div>
             </div>
         </div>
-
+        <!--/Body-->
         <!--Modal-->
         <div class="modal fade" id="saveChanges">
             <div class="modal-dialog">

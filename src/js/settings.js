@@ -9,8 +9,9 @@ $(document).ready(function() {
     reader.onloadend = function() {
         var image = reader.result;
         changed = true;
-        attributes.background = image;
-        // console.log(attributes);
+        attributes.backgroundImage = image;
+        jQuery("#backgroundPrev").css("background-image", "url(" + image + ")");
+        jQuery("#backgroundPrev").show();
     };
     
     /**
@@ -18,8 +19,20 @@ $(document).ready(function() {
      */
     $("#newBackground").on("change", function() {
         reader.readAsDataURL($(this)[0].files[0]);
+        previewIcon();
     });
     
+    /**
+     * User selected a background color
+     */
+    $("#backgroundColor").on("input", function() {
+        changed = true;
+        attributes.backgroundColor = $(this).val();
+    });
+    
+    /**
+     * Clicked on save changes button
+     */
     $("#save").on("click", function(e) {
         e.preventDefault();
         chrome.storage.local.set(attributes, function() {
@@ -27,6 +40,9 @@ $(document).ready(function() {
         });
     });
     
+    /**
+     * Clicked on cancel changes button
+     */
     $("#cancel").on("click", function(e) {
         if(!changed) {
             e.preventDefault();
@@ -34,6 +50,9 @@ $(document).ready(function() {
         }
     });
     
+    /**
+     * Clicked on destroy changes button
+     */
     $("#destroyChanges").on("click", function(e) {
         e.preventDefault();
         window.location.href = "newtab.html";

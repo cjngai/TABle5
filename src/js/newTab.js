@@ -1,6 +1,11 @@
 $(document).ready(function() {
-    chrome.storage.local.get("background", function(result) {
-        jQuery("body").css("background-image", "url(" + result.background + ")");
+    /**
+     * Loads saved background if it exists
+     */
+    chrome.storage.local.get("backgroundImage", function(result) {
+        if(result.backgroundImage) {
+            jQuery("body").css("background-image", "url(" + result.backgroundImage + ")");
+        }
     });
     
     /**
