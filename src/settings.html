@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>New Tab | Settings</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script src="js/jquery-1.11.3.min.js"></script>
+        <script src="js/bootstrap.min.js"></script>
+        <script src="js/settings.js"></script>
+        <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" />
+        <link rel="stylesheet" type="text/css" href="css/bootstrap-theme.min.css" />
+    </head>
+    <body>
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-2">
+                    <nav class="bs-docs-sidebar affix">
+                        <h3>Settings</h3>
+                        <ul class="nav bs-docs-sidenav">
+                            <li class>
+                                <a href="#background">Background</a>
+                            </li>
+                            <li class>
+                                <a href="#links">Links</a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+                <div class="col-lg-6">
+                    <div class="row" id="background">
+                        <h1>Background</h1>
+                        <input type="file" id="newBackground" accept="image/*" />
+                    </div>
+                    <div class="row" id="links">
+                        <h1>Links...</h1>
+                        <a href="#">Some links</a>
+                    </div>
+                    <div class="row">
+                        <div class="btn btn-primary" id="save">Save</div>
+                        <div class="btn btn-default" id="cancel" data-toggle="modal" data-target="#saveChanges">Cancel</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!--Modal-->
+        <div class="modal fade" id="saveChanges">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Are you sure?</h4>
+                    </div>
+                    <div class="modal-body">
+                        <p>
+                            Changes have been made.<br />
+                            Are you sure you want to cancel changes?
+                        </p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
+                        <button type="button" class="btn btn-primary" id="destroyChanges">Yes</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--/Modal-->
+    </body>
+</html>

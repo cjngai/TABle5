@@ -1,24 +1,6 @@
 $(document).ready(function() {
-    var reader = new FileReader();
-    
-    $("#saveBackground").on("click", function(e) {
-        e.preventDefault();
-        // TODO: save background
-        $("#backgroundDialog").modal('hide');
-    });
-    
-    /**
-     * Reader read the file
-     */
-    reader.onloadend = function() {
-        jQuery("body").css("background-image", "url(" + reader.result + ")");
-    };
-    
-    /**
-     * User selected a file for background
-     */
-    $("#newBackground").on("change", function() {
-        reader.readAsDataURL($(this)[0].files[0]);
+    chrome.storage.local.get("background", function(result) {
+        jQuery("body").css("background-image", "url(" + result.background + ")");
     });
     
     /**
@@ -29,8 +11,13 @@ $(document).ready(function() {
         var hours = date.getHours();
         var minutes = date.getMinutes();
         var seconds = date.getSeconds();
-        return hours * 3600 + minutes * 60 + seconds;
+        var time = hours * 3600 + minutes * 60 + seconds;
+        if(time > 46799) {
+            time -= 43200;
+        }
+        return time;
     };
+    
     var clock = $("#clock").FlipClock({});
     clock.setTime(time());
 });
