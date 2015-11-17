@@ -2,9 +2,12 @@ $(document).ready(function() {
     /**
      * Loads saved background if it exists
      */
-    chrome.storage.local.get("backgroundImage", function(result) {
+    chrome.storage.local.get(null, function(result) {
         if(result.backgroundImage) {
             jQuery("body").css("background-image", "url(" + result.backgroundImage + ")");
+        }
+        if(result.backgroundColor) {
+            jQuery("body").css("background-color", result.backgroundColor);
         }
     });
     
