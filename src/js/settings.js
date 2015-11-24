@@ -3,9 +3,9 @@ $(document).ready(function() {
     var changed = false;
     var attributes = {};
     
-    /**
-     * Reader read the file
-     */
+    /************************
+     * Reader read the file *
+     ************************/
     reader.onloadend = function() {
         var image = reader.result;
         changed = true;
@@ -14,25 +14,25 @@ $(document).ready(function() {
         jQuery("#backgroundPrev").show();
     };
     
-    /**
-     * User selected a file for background
-     */
+    /**********************************
+     * Selected a file for background *
+     **********************************/
     $("#newBackground").on("change", function() {
         reader.readAsDataURL($(this)[0].files[0]);
         previewIcon();
     });
     
-    /**
-     * User selected a background color
-     */
+    /*******************************
+     * Selected a background color *
+     *******************************/
     $("#backgroundColor").on("input", function() {
         changed = true;
         attributes.backgroundColor = $(this).val();
     });
     
-    /**
-     * Clicked on save changes button
-     */
+    /**********************************
+     * Clicked on save changes button *
+     **********************************/
     $("#save").on("click", function(e) {
         e.preventDefault();
         chrome.storage.local.set(attributes, function() {
@@ -40,21 +40,21 @@ $(document).ready(function() {
         });
     });
     
-    /**
-     * Clicked on cancel changes button
-     */
+    /************************************
+     * Clicked on cancel changes button *
+     ************************************/
     $("#cancel").on("click", function(e) {
         if(!changed) {
             e.preventDefault();
-            window.location.href = "newtab.html";
+            window.location.href = "newtab.html"; // Redirects to newtab
         }
     });
     
-    /**
-     * Clicked on destroy changes button
-     */
+    /*************************************
+     * Clicked on destroy changes button *
+     *************************************/
     $("#destroyChanges").on("click", function(e) {
         e.preventDefault();
-        window.location.href = "newtab.html";
+        window.location.href = "newtab.html"; // Redirects to newtab
     });
 });
