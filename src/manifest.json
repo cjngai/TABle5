@@ -1,5 +1,6 @@
 {
     "name": "TABle5",
+    "description": "Making a useful new tab page.",
     "version": "1.0",
     "permissions": [
         "storage"
@@ -7,5 +8,12 @@
     "chrome_url_overrides": {
         "newtab": "newTab.html"
     },
+    "background": {
+        "scripts": ["background.js"]
+    },
+    "omnibox": {
+        "keyword": "table5"
+    },
+    "minimum_chrome_version": "9",
     "manifest_version": 2
 }
