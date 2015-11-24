@@ -39,4 +39,35 @@ $(document).ready(function () {
     };
     
     init();
+    
+    /********************************************
+     * Functions
+     ********************************************/
+    $("#addNote").on("click", function(e) {
+        e.preventDefault();
+        var $li = $("<li></li>");
+        var $form = $("<form></form>");
+        var $textarea = $("<textarea></textarea>");
+        var $save = $("<button></button>");
+        $textarea.attr({
+            id: "note",
+            rows: "4",
+            cols: "25"
+        });
+        $save.attr({
+            type: "button",
+            id: "saveNote",
+            class: "btn btn-primary"
+        });
+        $save.append("Save");
+        $textarea.append("Start typing");
+        $form.append($textarea);
+        $form.append($save);
+        $li.append($form);
+        $("#notes").append($li);
+        $("#editNote").hide();
+        $textarea.focus();
+        $textarea.select();
+    });
+    
 });
