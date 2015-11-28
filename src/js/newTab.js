@@ -55,7 +55,18 @@ $(document).ready(function () {
             if(result.hasOwnProperty("notes")) {
                 var notes = result.notes;
                 for (var i = 0; i < notes.length; i++) {
-                    $("#notes").append("<li data-index=\"" + i + "\">" + notes[i] + "</li>");
+                    var $li = $("<li></li>");
+                    var $x = $("<span></span>");
+                    $li.attr({
+                        "data-index": i
+                    });
+                    $li.text(notes[i]);
+                    $x.attr({
+                        "class": "x glyphicon glyphicon-remove",
+                        "aria-hidden": "hidden"
+                    });
+                    $li.append($x);
+                    $("#notes").append($li);
                 }
             } else {
                 saveChanges({"notes": []});
@@ -64,6 +75,9 @@ $(document).ready(function () {
         });
     };
 
+    /********************
+     * Initializes page *
+     ********************/
     var init = function () {
         loadBackground();
         loadClock();
@@ -129,8 +143,20 @@ $(document).ready(function () {
             var notes = result.notes;
             var note = escapeHtml(jQuery("#note").val());
             notes.push(note);
+            console.log(notes);
             saveChanges({"notes": notes});
-            $("#notes").append("<li data-index=\"" + (notes.length - 1) + "\">" + note + "</li>");
+            var $li = $("<li></li>");
+            var $x = $("<span></span>");
+            $li.attr({
+                "data-index": (notes.length - 1)
+            });
+            $li.text(note);
+            $x.attr({
+                "class": "x glyphicon glyphicon-remove",
+                "aria-hidden": "hidden"
+            });
+            $li.append($x);
+            $("#notes").append($li);
             $("#noteContainer").remove();
             $("#editNote").show();
         });

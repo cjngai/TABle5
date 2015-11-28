@@ -13,6 +13,14 @@ textarea {
     max-width: 90%;
 }
 
+li[data-index]:hover .x {
+    display: inline-block;
+}
+
+ul li {
+    padding: 2px;
+}
+
 .footer {
     position: fixed;
     bottom: 0;
@@ -31,4 +39,14 @@ textarea {
     padding-bottom: 15px;
     max-height: 70vh;
     overflow-y: scroll;
+}
+
+.x {
+    display: none;
+    float: right;
+    cursor: pointer;
+}
+
+.x:hover {
+    background-color: rgb(153, 153, 153);
 }
