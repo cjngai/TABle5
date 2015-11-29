@@ -12,6 +12,8 @@ All you need to use TABle5 is [Google Chrome](https://www.google.com/chrome/brow
 - [Installing TABle5](#installing-table5)
 - [Customizing TABle5](#customizing-table5)
   - [Background Settings](#background-settings)
+- [Known Issues](#known-issues)
+- [License](#license)
 
 ## Installing TABle5
 
@@ -26,5 +28,12 @@ When you open a new tab on Chrome, you will be greeted by your new homepage.  To
 If the default background does not fit your style, you have the option of changing it.
 You may either upload your own background photo, or simply change the background to a solid color.
 
+## Known Issues
+
+TABle5 is still undergoing development and has not been released yet.  
+
+## License
+
+TABle5 is free software released under the [MIT License](https://tldrlegal.com/license/mit-license).  Basically, you can do whatever you want with TABle5 as long as you include the original copyright and license notice in any copy of the software/source.
 
 
