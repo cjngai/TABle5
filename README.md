@@ -1,5 +1,11 @@
 # TABle5
 
-This is the repository for our CSCI 2961 team project, TABle5. TABle5 is both our team and project name.
+## Introduction
 
-Collaborators: Christopher Ngai, Helen Lei, Sumit Munshi, and Cole Baxter
+Welcome to the TABle5 repository.  TABle5 is an extension for Google Chrome that allows you to customize the browser's "New Tab" page into your own personal homepage.
+
+All you need to use TABle5 is [Google Chrome](https://www.google.com/chrome/browser/desktop/index.html) itself! The extension is written in Javascript using the [Meteor JS](https://www.meteor.com/) engine.
+
+## Table of Contents
+- [Introduction][TABle5]
+- [Installing TABle5][installation]
