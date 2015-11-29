@@ -10,7 +10,19 @@ All you need to use TABle5 is [Google Chrome](https://www.google.com/chrome/brow
 
 - [Introduction](#table5)
 - [Installing TABle5](#installing-table5)
+- [Customizing TABle5](#customizing-table5)
 
 ## Installing TABle5
+
+## Customizing TABle5
+
+When you open a new tab on Chrome, you will be greeted by your new homepage.  To customize certain features, click the **Settings** menu in the bottom left corner of the page.
+
+### Background Settings
+
+![](https://cloud.githubusercontent.com/assets/14128808/11459085/47d67714-969c-11e5-86ed-5fd002c96ee5.png)
+
+If the default background does not fit your style, you have the option of changing it.
+
 
 
