@@ -7,5 +7,11 @@ Welcome to the TABle5 repository.  TABle5 is an extension for Google Chrome that
 All you need to use TABle5 is [Google Chrome](https://www.google.com/chrome/browser/desktop/index.html) itself! The extension is written in Javascript using the [Meteor JS](https://www.meteor.com/) engine.
 
 ## Table of Contents
-- [Introduction][introduction]
-- [Installing TABle5][installation]
+
+- [Introduction](#table5)
+- [Installing TABle5](#installation)
+- 
+
+## Installing TABle5
+
+
