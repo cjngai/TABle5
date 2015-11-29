@@ -11,6 +11,7 @@ All you need to use TABle5 is [Google Chrome](https://www.google.com/chrome/brow
 - [Introduction](#table5)
 - [Installing TABle5](#installing-table5)
 - [Customizing TABle5](#customizing-table5)
+  - [Background Settings](#background-settings)
 
 ## Installing TABle5
 
