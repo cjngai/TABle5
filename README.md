@@ -24,6 +24,7 @@ When you open a new tab on Chrome, you will be greeted by your new homepage.  To
 ![](https://cloud.githubusercontent.com/assets/14128808/11459085/47d67714-969c-11e5-86ed-5fd002c96ee5.png)
 
 If the default background does not fit your style, you have the option of changing it.
+You may either upload your own background photo, or simply change the background to a solid color.
 
 
 
