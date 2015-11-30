@@ -1,12 +1,19 @@
 $(document).ready(function () {
+    /*********************************************
+     * HTML mapping to escape special characters *
+     *********************************************/
     var entityMap = {
         "&": "&amp;",
         "<": "&lt;",
         ">": "&gt;",
-        '"': '&quot;',
-        "'": '&#39;',
-        "/": '&#x2F;'
+        '"': "&quot;",
+        "'": "&#39;",
+        "/": "&#x2F;"
     };
+    
+    /***************************************************
+     * Escapes HTML string based on entityMap variable *
+     ***************************************************/
     var escapeHtml = function(string) {
         return String(string).replace(/[&<>"'\/]/g, function (s) {
             return entityMap[s];
@@ -75,6 +82,34 @@ $(document).ready(function () {
         });
     };
 
+    /*********************
+     * Initializes todos *
+     *********************/
+    var loadTodos = function () {
+        chrome.storage.local.get("todos", function (result) {
+            if(result.hasOwnProperty("todos")) {
+                var todos = result.todos;
+                for (var i = 0; i < todos.length; i++) {
+                    var $li = $("<li></li>");
+                    var $x = $("<span></span>");
+                    $li.attr({
+                        "data-index": i
+                    });
+                    $li.text(todos[i]);
+                    $x.attr({
+                        "class": "x glyphicon glyphicon-remove",
+                        "aria-hidden": "hidden"
+                    });
+                    $li.append($x);
+                    $("#todos").append($li);
+                }
+            } else {
+                saveChanges({"todos": []});
+            }
+
+        });
+    };
+
     /********************
      * Initializes page *
      ********************/
@@ -82,6 +117,7 @@ $(document).ready(function () {
         loadBackground();
         loadClock();
         loadNotes();
+        loadTodos();
     };
 
     init();
@@ -143,7 +179,7 @@ $(document).ready(function () {
             var notes = result.notes;
             var note = escapeHtml(jQuery("#note").val());
             notes.push(note);
-            console.log(notes);
+            // console.log(notes);
             saveChanges({"notes": notes});
             var $li = $("<li></li>");
             var $x = $("<span></span>");
@@ -159,6 +195,67 @@ $(document).ready(function () {
             $("#notes").append($li);
             $("#noteContainer").remove();
             $("#editNote").show();
+        });
+    });
+    
+    /********************
+     * Clicked add todo *
+     ********************/
+    $("#addTodo").on("click", function (e) {
+        e.preventDefault();
+        var $li = $("<li></li>");
+        var $form = $("<form></form>");
+        var $textarea = $("<textarea></textarea>");
+        var $save = $("<button></button>");
+        $li.attr({
+            id: "todoContainer"
+        });
+        $textarea.attr({
+            id: "todo",
+            rows: "4",
+            cols: "25",
+            placeholder: "What do you need to do later?"
+        });
+        $save.attr({
+            type: "button",
+            id: "saveTodo",
+            class: "btn btn-primary"
+        });
+        $save.append("Save");
+        $form.append($textarea);
+        $form.append("<br />");
+        $form.append($save);
+        $li.append($form);
+        $("#todos").append($li);
+        $("#editTodo").hide();
+        $textarea.focus();
+    });
+
+    /*********************
+     * Clicked save todo *
+     *********************/
+    $("#todos").delegate("#saveTodo", "click", function (e) {
+        e.preventDefault();
+        chrome.storage.local.get("todos", function (result) {
+            var todos = result.todos;
+            var todo = escapeHtml(jQuery("#todo").val());
+            todos.push(todo);
+            // console.log(todos);
+            saveChanges({"todos": todos});
+            var $li = $("<li></li>");
+            var $x = $("<span></span>");
+            $li.attr({
+                "data-index": (todos.length - 1)
+            });
+            $li.text(todo);
+            $x.attr({
+                "class": "x glyphicon glyphicon-remove",
+                "aria-hidden": "hidden"
+            });
+            $li.append($x);
+            $("#todos").append($li);
+            $("#todoContainer").remove();
+            $("#editTodo").show();
         });
     });
 });
