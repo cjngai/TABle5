@@ -1,4 +1,9 @@
 $(document).ready(function () {
+    /**************************
+     * Conway's Game Variable *
+     **************************/
+    var game;
+    
     /*********************************************
      * HTML mapping to escape special characters *
      *********************************************/
@@ -6,7 +11,7 @@ $(document).ready(function () {
         "&": "&amp;",
         "<": "&lt;",
         ">": "&gt;",
-        '"': "&quot;",
+        '"': '&quot;',
         "'": "&#39;",
         "/": "&#x2F;"
     };
@@ -55,7 +60,7 @@ $(document).ready(function () {
                 cells[i][j] = Math.floor(Math.random() * 2);
             }
         }
-        var game = new GameOfLife({
+        game = new GameOfLife({
             canvas_id: "gol-background",
             cell_width: 10,
             cell_height: 10,
@@ -109,7 +114,7 @@ $(document).ready(function () {
                     $li.attr({
                         "data-index": i
                     });
-                    $li.text(notes[i]);
+                    $li.html(notes[i]);
                     $x.attr({
                         "class": "notex glyphicon glyphicon-remove",
                         "aria-hidden": "hidden"
@@ -137,7 +142,7 @@ $(document).ready(function () {
                     $li.attr({
                         "data-index": i
                     });
-                    $li.text(todos[i]);
+                    $li.html(todos[i]);
                     $x.attr({
                         "class": "todox glyphicon glyphicon-remove",
                         "aria-hidden": "hidden"
@@ -178,6 +183,14 @@ $(document).ready(function () {
             // Nothing to see here
         });
     };
+    
+    $(window).on("blur", function() {
+        game_toggle(game, "stop");
+    });
+    
+    $(window).on("focus", function() {
+        game_toggle(game, "start");
+    });
 
     /********************
      * Clicked add note *
@@ -228,7 +241,7 @@ $(document).ready(function () {
             $li.attr({
                 "data-index": (notes.length - 1)
             });
-            $li.text(note);
+            $li.html(note);
             $x.attr({
                 "class": "notex glyphicon glyphicon-remove",
                 "aria-hidden": "hidden"
@@ -289,7 +302,7 @@ $(document).ready(function () {
             $li.attr({
                 "data-index": (todos.length - 1)
             });
-            $li.text(todo);
+            $li.html(todo);
             $x.attr({
                 "class": "todox glyphicon glyphicon-remove",
                 "aria-hidden": "hidden"
