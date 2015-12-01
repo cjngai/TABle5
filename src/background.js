@@ -23,10 +23,12 @@ chrome.omnibox.onInputEntered.addListener(
             }
         });
 
-function addNote(note) {
+// Adds a note
+var addNote = function(note) {
     alert("Adding note " + note);
-}
+};
 
-function addTodo(todo) {
+// Adds a todo
+var addTodo =  function(todo) {
     alert("Adding todo " + todo);
-}
+};

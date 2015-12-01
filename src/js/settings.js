@@ -3,6 +3,14 @@ $(document).ready(function() {
     var changed = false;
     var attributes = {};
     
+    chrome.storage.local.get("gol", function(result) {
+        if(result.gol === "true") {
+            $("#golon").attr("checked", true);
+        } else {
+            $("#goloff").attr("checked", true);
+        }
+    });
+    
     /************************
      * Reader read the file *
      ************************/
@@ -28,6 +36,11 @@ $(document).ready(function() {
     $("#backgroundColor").on("input", function() {
         changed = true;
         attributes.backgroundColor = $(this).val();
+    });
+    
+    $("input[name=gol]").on("change", function() {
+        changed = true;
+        attributes.gol = $("input[name=gol]:checked").val();
     });
     
     /**********************************
