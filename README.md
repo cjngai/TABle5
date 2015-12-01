@@ -51,7 +51,7 @@ Special characters that require HTML escaping, such as double quotes, are automa
 
 To add a note, simply click **Add Note**.  To save your note, click **Save**.
 
-If you would like to edit a note, click the (edit) button.  If you would like to delete a note, click the **X** button.
+If you would like to edit a note, hover over the note and click the (edit) button.  If you would like to delete a note, hover over the note and click the **X** button.
 
 ## Known Issues
 
