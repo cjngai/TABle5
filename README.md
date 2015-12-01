@@ -14,6 +14,7 @@ All you need to use TABle5 is [Google Chrome](https://www.google.com/chrome/brow
   - [Background Settings](#background-settings)
   - [Game of Life](#game-of-life)
 - [Using the Interface](#using-the-interface)
+  - [Notes](#notes)
 - [Known Issues](#known-issues)
 - [License](#license)
 
@@ -36,6 +37,17 @@ You can toggle an implementation of [Conway's Game of Life](https://en.wikipedia
 
 ## Using the Interface
 
+TABle5 comes with several features that add more interaction to your New Tab page.
+
+### Notes
+
+![](https://cloud.githubusercontent.com/assets/14128808/11510090/d12b6ea4-982f-11e5-8733-075e37cb2ebc.png)
+
+If you ever need to make a note of something, like a floating shopping list, TABle5 comes with a convenient note taking feature.
+
+It gives you the option to save, edit, or delete multiple notes.  There are no restrictions on the width or length of a single note; scrollbars have been provided in case this becomes an issue.  The text area can support both ANSI and Unicode characters (in other words: it can accept more than just the Latin alphabet, so languages like Russian, Chinese, and Hindi can be saved as notes as well).  
+
+Special characters that require HTML escaping, such as double quotes, are automatically parsed and do not require any fancy formatting from the end user. 
 
 ## Known Issues
 
