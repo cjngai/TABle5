@@ -47,7 +47,11 @@ If you ever need to make a note of something, like a floating shopping list, TAB
 
 It gives you the option to save, edit, or delete multiple notes.  There are no restrictions on the width or length of a single note; scrollbars have been provided in case this becomes an issue.  The text area can support both ANSI and Unicode characters (in other words: it can accept more than just the Latin alphabet, so languages like Russian, Chinese, and Hindi can be saved as notes as well).  
 
-Special characters that require HTML escaping, such as double quotes, are automatically parsed and do not require any fancy formatting from the end user. 
+Special characters that require HTML escaping, such as double quotes, are automatically parsed and do not require any fancy formatting from the end user.
+
+To add a note, simply click **Add Note**.  To save your note, click **Save**.
+
+If you would like to edit a note, click the (edit) button.  If you would like to delete a note, click the **X** button.
 
 ## Known Issues
 
