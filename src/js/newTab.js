@@ -87,20 +87,21 @@ $(document).ready(function () {
      * Initializes clock *
      *********************/
     var loadClock = function () {
-        var time = function () {
+        var incrementClock = function () {
             var date = new Date();
             var hours = date.getHours();
             var minutes = date.getMinutes();
             var seconds = date.getSeconds();
-            var time = hours * 3600 + minutes * 60 + seconds;
-            if (time > 46799) {
-                time -= 43200;
-            }
-            return time;
+            $("#clock").html(
+                ((hours > 12) ? hours - 12 : hours) + ":" +
+                ((minutes < 10) ? "0" : "") + minutes + ":" +
+                ((seconds < 10) ? "0" : "") + seconds + " " +
+                ((hours < 12) ? "AM" : "PM")
+            );
         };
-
-        var clock = $("#clock").FlipClock({});
-        clock.setTime(time());
+        window.setInterval(function() {
+            incrementClock();
+        }, 1000);
     };
 
     /*********************

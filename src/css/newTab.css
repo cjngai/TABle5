@@ -44,24 +44,32 @@ ul li {
     border: 1px solid black;
     padding-bottom: 15px;
     max-height: 70vh;
-    overflow-y: scroll;
+    overflow-y: auto;
+    border-top-left-radius: 25px;
+    border-top-right-radius: 25px;
 }
 
-.notep, .notex, .todop, .todox {
+.notex,
+.notep,
+.todox,
+.todop {
     display: none;
     float: right;
     cursor: pointer;
-}
-
-.notex, .notep, .todox, .todop {
     padding: 2px;
 }
 
-.notep:hover, .todop:hover, .notex:hover, .todox:hover {
+.notex:hover,
+.notep:hover,
+.todox:hover,
+.todop:hover {
     background-color: rgb(153, 153, 153);
 }
 
-#note, #todo, textarea[id*='note'], textarea[id*='todo'] {
+#note,
+#todo,
+textarea[id*='note'],
+textarea[id*='todo'] {
     vertical-align: top;
 }
 
@@ -72,4 +80,10 @@ ul li {
     width: 100%;
     height: 100%;
     z-index: -9999;
+}
+
+#clock {
+    font-size: 4em;
+    -webkit-text-stroke-color: white;
+    -webkit-text-stroke-width: 1px;
 }

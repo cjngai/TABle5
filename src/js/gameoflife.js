@@ -195,7 +195,10 @@ var GameDisplay = function(num_cells_x, num_cells_y, cell_width, cell_height, ca
                 a=(Math.floor(Math.random()*6)+5)/10; // rand between 0.5 and 1.0
             ctx.fillStyle = "rgba(" + r + "," + g + "," + b + "," + a + ")";
           }
-          ctx.fillRect(start_x, start_y, cell_width, cell_height);
+          //ctx.fillRect(start_x, start_y, cell_width, cell_height);
+          ctx.beginPath();
+          ctx.arc(start_x + 5, start_y + 5, 5, 0, 2*Math.PI);
+          ctx.fill();
         } else {
           ctx.clearRect(start_x, start_y, cell_width, cell_height);
         }
