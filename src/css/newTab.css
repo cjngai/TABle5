@@ -13,13 +13,17 @@ textarea {
     max-width: 90%;
 }
 
-li[data-index]:hover .notex, li[data-index]:hover .todox {
+li[data-index]:hover .notep,
+li[data-index]:hover .notex,
+li[data-index]:hover .todop,
+li[data-index]:hover .todox {
     display: inline-block;
 }
 
 ul li {
     padding: 2px;
     white-space: pre;
+    word-wrap: break-word;
 }
 
 .footer {
@@ -43,17 +47,21 @@ ul li {
     overflow-y: scroll;
 }
 
-.notex, .todox {
+.notep, .notex, .todop, .todox {
     display: none;
     float: right;
     cursor: pointer;
 }
 
-.notex:hover, .todox:hover {
+.notex, .notep, .todox, .todop {
+    padding: 2px;
+}
+
+.notep:hover, .todop:hover, .notex:hover, .todox:hover {
     background-color: rgb(153, 153, 153);
 }
 
-#note, #todo {
+#note, #todo, textarea[id*='note'], textarea[id*='todo'] {
     vertical-align: top;
 }
 

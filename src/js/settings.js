@@ -49,7 +49,7 @@ $(document).ready(function() {
     $("#save").on("click", function(e) {
         e.preventDefault();
         chrome.storage.local.set(attributes, function() {
-            window.location.href = "newtab.html"; // Redirects to newtab
+            window.location.href = "newTab.html"; // Redirects to newtab
         });
     });
     
@@ -59,7 +59,7 @@ $(document).ready(function() {
     $("#cancel").on("click", function(e) {
         if(!changed) {
             e.preventDefault();
-            window.location.href = "newtab.html"; // Redirects to newtab
+            window.location.href = "newTab.html"; // Redirects to newtab
         }
     });
     
@@ -68,6 +68,6 @@ $(document).ready(function() {
      *************************************/
     $("#destroyChanges").on("click", function(e) {
         e.preventDefault();
-        window.location.href = "newtab.html"; // Redirects to newtab
+        window.location.href = "newTab.html"; // Redirects to newtab
     });
 });

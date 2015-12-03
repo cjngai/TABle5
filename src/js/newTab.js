@@ -3,7 +3,8 @@ $(document).ready(function () {
      * Conway's Game Variable *
      **************************/
     var game;
-    
+    var is_game = false;
+
     /*********************************************
      * HTML mapping to escape special characters *
      *********************************************/
@@ -11,7 +12,7 @@ $(document).ready(function () {
         "&": "&amp;",
         "<": "&lt;",
         ">": "&gt;",
-        '"': '&quot;',
+        "\"": "&quot;",
         "'": "&#39;",
         "/": "&#x2F;"
     };
@@ -68,6 +69,7 @@ $(document).ready(function () {
             colorful: true
         });
         game_toggle(game, "start");
+        is_game = true;
     };
 
     var game_toggle = function (game, force) {
@@ -111,6 +113,7 @@ $(document).ready(function () {
                 for (var i = 0; i < notes.length; i++) {
                     var $li = $("<li></li>");
                     var $x = $("<span></span>");
+                    var $p = $("<span></span>");
                     $li.attr({
                         "data-index": i
                     });
@@ -119,13 +122,17 @@ $(document).ready(function () {
                         "class": "notex glyphicon glyphicon-remove",
                         "aria-hidden": "hidden"
                     });
+                    $p.attr({
+                        "class": "notep glyphicon glyphicon-pencil",
+                        "aria-hidden": "hidden"
+                    });
                     $li.append($x);
+                    $li.append($p);
                     $("#notes").append($li);
                 }
             } else {
                 saveChanges({"notes": []});
             }
-
         });
     };
 
@@ -139,6 +146,7 @@ $(document).ready(function () {
                 for (var i = 0; i < todos.length; i++) {
                     var $li = $("<li></li>");
                     var $x = $("<span></span>");
+                    var $p = $("<span></span>");
                     $li.attr({
                         "data-index": i
                     });
@@ -147,7 +155,12 @@ $(document).ready(function () {
                         "class": "todox glyphicon glyphicon-remove",
                         "aria-hidden": "hidden"
                     });
+                    $p.attr({
+                        "class": "todop glyphicon glyphicon-pencil",
+                        "aria-hidden": "hidden"
+                    });
                     $li.append($x);
+                    $li.append($p);
                     $("#todos").append($li);
                 }
             } else {
@@ -183,20 +196,29 @@ $(document).ready(function () {
             // Nothing to see here
         });
     };
-    
-    $(window).on("blur", function() {
-        game_toggle(game, "stop");
+
+    /*******************************
+     * Window blur stop background *
+     *******************************/
+    $(window).on("blur", function () {
+        if (is_game) {
+            game_toggle(game, "stop");
+        }
     });
-    
-    $(window).on("focus", function() {
-        game_toggle(game, "start");
+
+    /*********************************
+     * Window focus start background *
+     *********************************/
+    $(window).on("focus", function () {
+        if (is_game) {
+            game_toggle(game, "start");
+        }
     });
 
     /********************
      * Clicked add note *
      ********************/
-    $("#addNote").on("click", function (e) {
-        e.preventDefault();
+    $("#addNote").on("click", function () {
         var $li = $("<li></li>");
         var $form = $("<form></form>");
         var $textarea = $("<textarea></textarea>");
@@ -221,15 +243,14 @@ $(document).ready(function () {
         $form.append($save);
         $li.append($form);
         $("#notes").append($li);
-        $("#editNote").hide();
+        $("#editNoteButton").hide();
         $textarea.focus();
     });
 
     /*********************
      * Clicked save note *
      *********************/
-    $("#notes").on("click", "#saveNote", function (e) {
-        e.preventDefault();
+    $("#notes").on("click", "#saveNote", function () {
         chrome.storage.local.get("notes", function (result) {
             var notes = result.notes;
             var note = escapeHtml(jQuery("#note").val());
@@ -238,6 +259,7 @@ $(document).ready(function () {
             saveChanges({"notes": notes});
             var $li = $("<li></li>");
             var $x = $("<span></span>");
+            var $p = $("<span></span>");
             $li.attr({
                 "data-index": (notes.length - 1)
             });
@@ -246,18 +268,92 @@ $(document).ready(function () {
                 "class": "notex glyphicon glyphicon-remove",
                 "aria-hidden": "hidden"
             });
+            $p.attr({
+                "class": "notep glyphicon glyphicon-pencil",
+                "aria-hidden": "hidden"
+            });
             $li.append($x);
+            $li.append($p);
             $("#notes").append($li);
             $("#noteContainer").remove();
-            $("#editNote").show();
+            $("#editNoteButton").show();
+        });
+    });
+
+    /*********************
+     * Clicked edit note *
+     *********************/
+    $("#notes").on("click", ".notep", function () {
+        var $parent = $(this).parent();
+        var $form = $("<form></form>");
+        var $textarea = $("<textarea></textarea>");
+        var $save = $("<button></button>");
+        $textarea.attr({
+            id: "note" + $parent.data("index"),
+            rows: "4",
+            cols: "25",
+            placeholder: "Enter your note!"
+        });
+        $textarea.append($parent.text());
+        $save.attr({
+            type: "button",
+            class: "updateNote btn btn-primary"
+        });
+        $save.append("Update");
+        $form.append($textarea);
+        $form.append("<br />");
+        $form.append($save);
+        $parent.html($form);
+    });
+
+    /***********************
+     * Clicked update note *
+     ***********************/
+    $("#notes").on("click", "[class~='updateNote']", function () {
+        var $parent = $(this).parent().parent();
+        var index = $parent.data("index");
+        chrome.storage.local.get("notes", function (result) {
+            var notes = result.notes;
+            var note = escapeHtml(jQuery("#note" + index).val());
+            notes[index] = note;
+            var $x = $("<span></span>");
+            var $p = $("<span></span>");
+            $x.attr({
+                "class": "notex glyphicon glyphicon-remove",
+                "aria-hidden": "hidden"
+            });
+            $p.attr({
+                "class": "notep glyphicon glyphicon-pencil",
+                "aria-hidden": "hidden"
+            });
+            $parent.html(note);
+            $parent.append($x);
+            $parent.append($p);
+            saveChanges({"notes": notes});
+        });
+    });
+
+    /***********************
+     * Clicked delete note *
+     ***********************/
+    $("#notes").on("click", ".notex", function () {
+        var $parent = $(this).parent();
+        var index = $parent.data("index");
+        chrome.storage.local.get("notes", function (result) {
+            var notes = result.notes;
+            notes.splice(index, 1);
+            $parent.remove();
+            saveChanges({"notes": notes});
+            $("#notes li").each(function (index) {
+                $(this).data("index", index);
+            });
         });
     });
 
     /********************
      * Clicked add todo *
      ********************/
-    $("#addTodo").on("click", function (e) {
-        e.preventDefault();
+    $("#addTodo").on("click", function () {
         var $li = $("<li></li>");
         var $form = $("<form></form>");
         var $textarea = $("<textarea></textarea>");
@@ -282,15 +378,14 @@ $(document).ready(function () {
         $form.append($save);
         $li.append($form);
         $("#todos").append($li);
-        $("#editTodo").hide();
+        $("#editTodoButton").hide();
         $textarea.focus();
     });
 
     /*********************
      * Clicked save todo *
      *********************/
-    $("#todos").on("click", "#saveTodo", function (e) {
-        e.preventDefault();
+    $("#todos").on("click", "#saveTodo", function () {
         chrome.storage.local.get("todos", function (result) {
             var todos = result.todos;
             var todo = escapeHtml(jQuery("#todo").val());
@@ -299,6 +394,7 @@ $(document).ready(function () {
             saveChanges({"todos": todos});
             var $li = $("<li></li>");
             var $x = $("<span></span>");
+            var $p = $("<span></span>");
             $li.attr({
                 "data-index": (todos.length - 1)
             });
@@ -307,33 +403,74 @@ $(document).ready(function () {
                 "class": "todox glyphicon glyphicon-remove",
                 "aria-hidden": "hidden"
             });
+            $p.attr({
+                "class": "todop glyphicon glyphicon-pencil",
+                "aria-hidden": "hidden"
+            });
             $li.append($x);
+            $li.append($p);
             $("#todos").append($li);
             $("#todoContainer").remove();
-            $("#editTodo").show();
+            $("#editTodoButton").show();
         });
     });
 
-    /***************
-     * Delete Note *
-     ***************/
-    $("#notes").on("click", ".notex", function () {
+    /*********************
+     * Clicked edit todo *
+     *********************/
+    $("#todos").on("click", ".todop", function () {
         var $parent = $(this).parent();
-        var index = $parent.data()["index"];
-        chrome.storage.local.get("notes", function (result) {
-            var notes = result.notes;
-            notes.splice(index, 1);
-            $parent.remove();
-            saveChanges({"notes": notes});
-            $("#notes li").each(function (index) {
-                $(this).data("index", index);
+        var $form = $("<form></form>");
+        var $textarea = $("<textarea></textarea>");
+        var $save = $("<button></button>");
+        $textarea.attr({
+            id: "todo" + $parent.data("index"),
+            rows: "4",
+            cols: "25",
+            placeholder: "What do you need to do later?"
+        });
+        $textarea.append($parent.text());
+        $save.attr({
+            type: "button",
+            class: "updateTodo btn btn-primary"
+        });
+        $save.append("Update");
+        $form.append($textarea);
+        $form.append("<br />");
+        $form.append($save);
+        $parent.html($form);
+    });
+
+    /***********************
+     * Clicked update todo *
+     ***********************/
+    $("#todos").on("click", "[class~='updateTodo']", function () {
+        var $parent = $(this).parent().parent();
+        var index = $parent.data("index");
+        chrome.storage.local.get("todos", function (result) {
+            var todos = result.todos;
+            var todo = escapeHtml(jQuery("#todo" + index).val());
+            todos[index] = todo;
+            var $x = $("<span></span>");
+            var $p = $("<span></span>");
+            $x.attr({
+                "class": "todox glyphicon glyphicon-remove",
+                "aria-hidden": "hidden"
             });
+            $p.attr({
+                "class": "todop glyphicon glyphicon-pencil",
+                "aria-hidden": "hidden"
+            });
+            $parent.html(todo);
+            $parent.append($x);
+            $parent.append($p);
+            saveChanges({"todos": todos});
         });
     });
 
-    /***************
-     * Delete Todo *
-     ***************/
+    /***********************
+     * Clicked delete Todo *
+     ***********************/
     $("#todos").on("click", ".todox", function () {
         var $parent = $(this).parent();
         var index = $parent.data()["index"];
