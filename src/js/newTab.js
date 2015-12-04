@@ -25,6 +25,24 @@ $(document).ready(function () {
             return entityMap[s];
         });
     };
+    
+    var pencilIcon = function (c) {
+        var $p = $("<span></span>");
+        $p.attr({
+            "class": c + " glyphicon glyphicon-pencil",
+            "aria-hidden": "hidden"
+        });
+        return $p;
+    };
+    
+    var deleteIcon = function(c) {
+        var $x = $("<span></span>");
+        $x.attr({
+            "class": c + " glyphicon glyphicon-remove",
+            "aria-hidden": "hidden"
+        });
+        return $x;
+    };
 
     /**************************
      * Initializes background *
@@ -45,6 +63,9 @@ $(document).ready(function () {
         });
     };
 
+    /***********************************
+     * Creates game of life background *
+     ***********************************/
     var gameOfLife = function () {
         var $canvas = $("<canvas></canvas>");
         $canvas.attr({
@@ -72,6 +93,9 @@ $(document).ready(function () {
         is_game = true;
     };
 
+    /************************
+     * Toggles game of life *
+     ************************/
     var game_toggle = function (game, force) {
         var interval = game.getInterval();
         if (force === "stop" || interval !== null) {
@@ -113,22 +137,12 @@ $(document).ready(function () {
                 var notes = result.notes;
                 for (var i = 0; i < notes.length; i++) {
                     var $li = $("<li></li>");
-                    var $x = $("<span></span>");
-                    var $p = $("<span></span>");
                     $li.attr({
                         "data-index": i
                     });
                     $li.html(notes[i]);
-                    $x.attr({
-                        "class": "notex glyphicon glyphicon-remove",
-                        "aria-hidden": "hidden"
-                    });
-                    $p.attr({
-                        "class": "notep glyphicon glyphicon-pencil",
-                        "aria-hidden": "hidden"
-                    });
-                    $li.append($x);
-                    $li.append($p);
+                    $li.append(deleteIcon("notex"));
+                    $li.append(pencilIcon("notep"));
                     $("#notes").append($li);
                 }
             } else {
@@ -146,22 +160,12 @@ $(document).ready(function () {
                 var todos = result.todos;
                 for (var i = 0; i < todos.length; i++) {
                     var $li = $("<li></li>");
-                    var $x = $("<span></span>");
-                    var $p = $("<span></span>");
                     $li.attr({
                         "data-index": i
                     });
                     $li.html(todos[i]);
-                    $x.attr({
-                        "class": "todox glyphicon glyphicon-remove",
-                        "aria-hidden": "hidden"
-                    });
-                    $p.attr({
-                        "class": "todop glyphicon glyphicon-pencil",
-                        "aria-hidden": "hidden"
-                    });
-                    $li.append($x);
-                    $li.append($p);
+                    $li.append(deleteIcon("todox"));
+                    $li.append(pencilIcon("todop"));
                     $("#todos").append($li);
                 }
             } else {
@@ -224,6 +228,7 @@ $(document).ready(function () {
         var $form = $("<form></form>");
         var $textarea = $("<textarea></textarea>");
         var $save = $("<button></button>");
+        var $cancel = $("<button></button>");
         $li.attr({
             id: "noteContainer"
         });
@@ -239,9 +244,15 @@ $(document).ready(function () {
             class: "btn btn-primary"
         });
         $save.append("Save");
+        $cancel.attr({
+            type: "button",
+            class: "cancelNewNote btn btn-default"
+        });
+        $cancel.append("Cancel");
         $form.append($textarea);
         $form.append("<br />");
         $form.append($save);
+        $form.append($cancel);
         $li.append($form);
         $("#notes").append($li);
         $("#editNoteButton").hide();
@@ -256,25 +267,14 @@ $(document).ready(function () {
             var notes = result.notes;
             var note = escapeHtml(jQuery("#note").val());
             notes.push(note);
-            // console.log(notes);
             saveChanges({"notes": notes});
             var $li = $("<li></li>");
-            var $x = $("<span></span>");
-            var $p = $("<span></span>");
             $li.attr({
                 "data-index": (notes.length - 1)
             });
             $li.html(note);
-            $x.attr({
-                "class": "notex glyphicon glyphicon-remove",
-                "aria-hidden": "hidden"
-            });
-            $p.attr({
-                "class": "notep glyphicon glyphicon-pencil",
-                "aria-hidden": "hidden"
-            });
-            $li.append($x);
-            $li.append($p);
+            $li.append(deleteIcon("notex"));
+            $li.append(pencilIcon("notep"));
             $("#notes").append($li);
             $("#noteContainer").remove();
             $("#editNoteButton").show();
@@ -286,9 +286,12 @@ $(document).ready(function () {
      *********************/
     $("#notes").on("click", ".notep", function () {
         var $parent = $(this).parent();
+        var currNote = $parent.text();
+        $parent.data("note", currNote);
         var $form = $("<form></form>");
         var $textarea = $("<textarea></textarea>");
         var $save = $("<button></button>");
+        var $cancel = $("<button></button>");
         $textarea.attr({
             id: "note" + $parent.data("index"),
             rows: "4",
@@ -301,9 +304,15 @@ $(document).ready(function () {
             class: "updateNote btn btn-primary"
         });
         $save.append("Update");
+        $cancel.attr({
+            type: "button",
+            class: "cancelOldNote btn btn-default"
+        });
+        $cancel.append("Cancel");
         $form.append($textarea);
         $form.append("<br />");
         $form.append($save);
+        $form.append($cancel);
         $parent.html($form);
     });
 
@@ -317,21 +326,31 @@ $(document).ready(function () {
             var notes = result.notes;
             var note = escapeHtml(jQuery("#note" + index).val());
             notes[index] = note;
-            var $x = $("<span></span>");
-            var $p = $("<span></span>");
-            $x.attr({
-                "class": "notex glyphicon glyphicon-remove",
-                "aria-hidden": "hidden"
-            });
-            $p.attr({
-                "class": "notep glyphicon glyphicon-pencil",
-                "aria-hidden": "hidden"
-            });
             $parent.html(note);
-            $parent.append($x);
-            $parent.append($p);
+            $parent.append(deleteIcon("notex"));
+            $parent.append(pencilIcon("notep"));
             saveChanges({"notes": notes});
         });
+    });
+    
+    /***************************
+     * Clicked cancel new note *
+     ***************************/
+    $("#notes").on("click", "[class~='cancelNewNote']", function() {
+        var $parent = $(this).parent().parent();
+        $parent.remove();
+        $("#editNoteButton").show();
+    });
+    
+    /***************************
+     * Clicked cancel old todo *
+     ***************************/
+    $("#notes").on("click", "[class~='cancelOldNote']", function() {
+        var $parent = $(this).parent().parent();
+        var note = $parent.data("note");
+        $parent.html(note);
+        $parent.append(deleteIcon("notex"));
+        $parent.append(pencilIcon("notep"));
     });
 
     /***********************
@@ -359,6 +378,7 @@ $(document).ready(function () {
         var $form = $("<form></form>");
         var $textarea = $("<textarea></textarea>");
         var $save = $("<button></button>");
+        var $cancel = $("<button></button>");
         $li.attr({
             id: "todoContainer"
         });
@@ -374,9 +394,15 @@ $(document).ready(function () {
             class: "btn btn-primary"
         });
         $save.append("Save");
+        $cancel.attr({
+            type: "button",
+            class: "cancelNewTodo btn btn-default"
+        });
+        $cancel.append("Cancel");
         $form.append($textarea);
         $form.append("<br />");
         $form.append($save);
+        $form.append($cancel);
         $li.append($form);
         $("#todos").append($li);
         $("#editTodoButton").hide();
@@ -391,25 +417,14 @@ $(document).ready(function () {
             var todos = result.todos;
             var todo = escapeHtml(jQuery("#todo").val());
             todos.push(todo);
-            // console.log(todos);
             saveChanges({"todos": todos});
             var $li = $("<li></li>");
-            var $x = $("<span></span>");
-            var $p = $("<span></span>");
             $li.attr({
                 "data-index": (todos.length - 1)
             });
             $li.html(todo);
-            $x.attr({
-                "class": "todox glyphicon glyphicon-remove",
-                "aria-hidden": "hidden"
-            });
-            $p.attr({
-                "class": "todop glyphicon glyphicon-pencil",
-                "aria-hidden": "hidden"
-            });
-            $li.append($x);
-            $li.append($p);
+            $li.append(deleteIcon("todox"));
+            $li.append(pencilIcon("todop"));
             $("#todos").append($li);
             $("#todoContainer").remove();
             $("#editTodoButton").show();
@@ -421,9 +436,12 @@ $(document).ready(function () {
      *********************/
     $("#todos").on("click", ".todop", function () {
         var $parent = $(this).parent();
+        var currTodo = $parent.text();
+        $parent.data("todo", currTodo);
         var $form = $("<form></form>");
         var $textarea = $("<textarea></textarea>");
         var $save = $("<button></button>");
+        var $cancel = $("<button></button>");
         $textarea.attr({
             id: "todo" + $parent.data("index"),
             rows: "4",
@@ -436,9 +454,15 @@ $(document).ready(function () {
             class: "updateTodo btn btn-primary"
         });
         $save.append("Update");
+        $cancel.attr({
+            type: "button",
+            class: "cancelOldTodo btn btn-default"
+        });
+        $cancel.append("Cancel");
         $form.append($textarea);
         $form.append("<br />");
         $form.append($save);
+        $form.append($cancel);
         $parent.html($form);
     });
 
@@ -452,25 +476,35 @@ $(document).ready(function () {
             var todos = result.todos;
             var todo = escapeHtml(jQuery("#todo" + index).val());
             todos[index] = todo;
-            var $x = $("<span></span>");
-            var $p = $("<span></span>");
-            $x.attr({
-                "class": "todox glyphicon glyphicon-remove",
-                "aria-hidden": "hidden"
-            });
-            $p.attr({
-                "class": "todop glyphicon glyphicon-pencil",
-                "aria-hidden": "hidden"
-            });
             $parent.html(todo);
-            $parent.append($x);
-            $parent.append($p);
+            $parent.append(deleteIcon("todox"));
+            $parent.append(pencilIcon("todop"));
             saveChanges({"todos": todos});
         });
     });
+    
+    /***************************
+     * Clicked cancel new todo *
+     ***************************/
+    $("#todos").on("click", "[class~='cancelNewTodo']", function() {
+        var $parent = $(this).parent().parent();
+        $parent.remove();
+        $("#editTodoButton").show();
+    });
+    
+    /***************************
+     * Clicked cancel old todo *
+     ***************************/
+    $("#todos").on("click", "[class~='cancelOldTodo']", function() {
+        var $parent = $(this).parent().parent();
+        var note = $parent.data("todo");
+        $parent.html(note);
+        $parent.append(deleteIcon("todox"));
+        $parent.append(pencilIcon("todop"));
+    });
 
     /***********************
-     * Clicked delete Todo *
+     * Clicked delete todo *
      ***********************/
     $("#todos").on("click", ".todox", function () {
         var $parent = $(this).parent();
