@@ -1,53 +1,69 @@
 $(document).ready(function () {
+    var
     /**************************
      * Conway's Game Variable *
      **************************/
-    var game;
-    var is_game = false;
+    game,
+    is_game = false,
+    latitude, longitude,
+    months = [
+        "Jan",
+        "Feb",
+        "Mar",
+        "Apr",
+        "May",
+        "Jun",
+        "Jul",
+        "Aug",
+        "Sep",
+        "Oct",
+        "Nov",
+        "Dec"
+    ],
 
     /*********************************************
      * HTML mapping to escape special characters *
      *********************************************/
-    var entityMap = {
+    entityMap = {
         "&": "&amp;",
         "<": "&lt;",
         ">": "&gt;",
         "\"": "&quot;",
         "'": "&#39;",
         "/": "&#x2F;"
-    };
+    },
 
     /***************************************************
      * Escapes HTML string based on entityMap variable *
      ***************************************************/
-    var escapeHtml = function (string) {
+    escapeHtml = function (string) {
         return String(string).replace(/[&<>"'\/]/g, function (s) {
             return entityMap[s];
         });
-    };
-    
-    var pencilIcon = function (c) {
+    },
+
+    pencilIcon = function (c) {
         var $p = $("<span></span>");
         $p.attr({
             "class": c + " glyphicon glyphicon-pencil",
             "aria-hidden": "hidden"
         });
         return $p;
-    };
-    
-    var deleteIcon = function(c) {
+    },
+
+    deleteIcon = function (c) {
         var $x = $("<span></span>");
         $x.attr({
             "class": c + " glyphicon glyphicon-remove",
             "aria-hidden": "hidden"
         });
         return $x;
-    };
+    },
 
     /**************************
      * Initializes background *
      **************************/
-    var loadBackground = function () {
+    loadBackground = function () {
         chrome.storage.local.get(["backgroundImage", "backgroundColor", "gol"], function (result) {
             if (result.gol === "true") {
                 console.log(result);
@@ -61,12 +77,12 @@ $(document).ready(function () {
                 }
             }
         });
-    };
+    },
 
     /***********************************
      * Creates game of life background *
      ***********************************/
-    var gameOfLife = function () {
+    gameOfLife = function () {
         var $canvas = $("<canvas></canvas>");
         $canvas.attr({
             id: "gol-background",
@@ -91,12 +107,12 @@ $(document).ready(function () {
         });
         game_toggle(game, "start");
         is_game = true;
-    };
+    },
 
     /************************
      * Toggles game of life *
      ************************/
-    var game_toggle = function (game, force) {
+    game_toggle = function (game, force) {
         var interval = game.getInterval();
         if (force === "stop" || interval !== null) {
             clearInterval(interval);
@@ -105,33 +121,37 @@ $(document).ready(function () {
             interval = setInterval(game.step, 100);
             game.setTheInterval(interval);
         }
-    };
+    },
 
     /*********************
      * Initializes clock *
      *********************/
-    var loadClock = function () {
+    loadClock = function () {
         var incrementClock = function () {
             var date = new Date();
             var hours = date.getHours();
             var minutes = date.getMinutes();
             var seconds = date.getSeconds();
+            var day = date.getDate();
+            var month = date.getMonth();
+            var year = date.getFullYear();
             $("#clock").html(
-                ((hours > 12) ? hours - 12 : hours) + ":" +
-                ((minutes < 10) ? "0" : "") + minutes + ":" +
-                ((seconds < 10) ? "0" : "") + seconds + " " +
-                ((hours < 12) ? "AM" : "PM")
-            );
+                    (month + 1) + "/" + day + "/" + year % 100 + " " +
+                    ((hours > 12) ? hours - 12 : hours) + ":" +
+                    ((minutes < 10) ? "0" : "") + minutes + ":" +
+                    ((seconds < 10) ? "0" : "") + seconds + " " +
+                    ((hours < 12) ? "AM" : "PM")
+                    );
         };
-        window.setInterval(function() {
+        window.setInterval(function () {
             incrementClock();
         }, 1000);
-    };
+    },
 
     /*********************
      * Initializes notes *
      *********************/
-    var loadNotes = function () {
+    loadNotes = function () {
         chrome.storage.local.get("notes", function (result) {
             if (result.hasOwnProperty("notes")) {
                 var notes = result.notes;
@@ -149,12 +169,12 @@ $(document).ready(function () {
                 saveChanges({"notes": []});
             }
         });
-    };
+    },
 
     /*********************
      * Initializes todos *
      *********************/
-    var loadTodos = function () {
+    loadTodos = function () {
         chrome.storage.local.get("todos", function (result) {
             if (result.hasOwnProperty("todos")) {
                 var todos = result.todos;
@@ -171,14 +191,13 @@ $(document).ready(function () {
             } else {
                 saveChanges({"todos": []});
             }
-
         });
-    };
+    },
 
     /********************
      * Initializes page *
      ********************/
-    var init = function () {
+    init = function () {
         loadBackground();
         loadClock();
         loadNotes();
@@ -332,20 +351,20 @@ $(document).ready(function () {
             saveChanges({"notes": notes});
         });
     });
-    
+
     /***************************
      * Clicked cancel new note *
      ***************************/
-    $("#notes").on("click", "[class~='cancelNewNote']", function() {
+    $("#notes").on("click", "[class~='cancelNewNote']", function () {
         var $parent = $(this).parent().parent();
         $parent.remove();
         $("#editNoteButton").show();
     });
-    
+
     /***************************
      * Clicked cancel old todo *
      ***************************/
-    $("#notes").on("click", "[class~='cancelOldNote']", function() {
+    $("#notes").on("click", "[class~='cancelOldNote']", function () {
         var $parent = $(this).parent().parent();
         var note = $parent.data("note");
         $parent.html(note);
@@ -482,20 +501,20 @@ $(document).ready(function () {
             saveChanges({"todos": todos});
         });
     });
-    
+
     /***************************
      * Clicked cancel new todo *
      ***************************/
-    $("#todos").on("click", "[class~='cancelNewTodo']", function() {
+    $("#todos").on("click", "[class~='cancelNewTodo']", function () {
         var $parent = $(this).parent().parent();
         $parent.remove();
         $("#editTodoButton").show();
     });
-    
+
     /***************************
      * Clicked cancel old todo *
      ***************************/
-    $("#todos").on("click", "[class~='cancelOldTodo']", function() {
+    $("#todos").on("click", "[class~='cancelOldTodo']", function () {
         var $parent = $(this).parent().parent();
         var note = $parent.data("todo");
         $parent.html(note);
