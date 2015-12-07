@@ -92,24 +92,30 @@ textarea[id*='todo'] {
     z-index: -9999;
 }
 
-#clock {
-    font-size: 4em;
+#date, #clock {
+    font-weight: bold;
+    font-size: 3em;
     -webkit-text-stroke-color: white;
     -webkit-text-stroke-width: 1px;
+}
+
+#clock {
+    text-align: center;
 }
 
 #weather {
     float: right;
     vertical-align: middle;
     background-color: purple;
-    margin-top: 5px;
-    padding: 0px 20px;
+    margin: 5px 0px;
+    padding: 5px 20px;
     border-radius: 50px;
 }
 
 #weather h2 {
     display: inline-block;
     color: #FFFFFF;
+    margin: 0px;
     padding: 0px 3px;
     font-size: 2.5em;
     font-weight: 300;

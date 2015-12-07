@@ -20,6 +20,15 @@ $(document).ready(function () {
         "Nov",
         "Dec"
     ],
+    dows = [
+        "Sun",
+        "Mon",
+        "Tues",
+        "Wed",
+        "Thur",
+        "Fri",
+        "Sat"
+    ],
 
     /*********************************************
      * HTML mapping to escape special characters *
@@ -126,20 +135,23 @@ $(document).ready(function () {
     /*********************
      * Initializes clock *
      *********************/
-    loadClock = function () {
+    loadDayNTime = function () {
         var incrementClock = function () {
             var date = new Date();
             var hours = date.getHours();
             var minutes = date.getMinutes();
             var seconds = date.getSeconds();
+            var dow = date.getDay();
             var day = date.getDate();
             var month = date.getMonth();
             var year = date.getFullYear();
+            $("#date").html(
+                    dows[dow] + ". " +
+                    months[month] + " " + day + ", " + year
+                    );
             $("#clock").html(
-                    (month + 1) + "/" + day + "/" + year % 100 + " " +
                     ((hours > 12) ? hours - 12 : hours) + ":" +
-                    ((minutes < 10) ? "0" : "") + minutes + ":" +
-                    ((seconds < 10) ? "0" : "") + seconds + " " +
+                    ((minutes < 10) ? "0" : "") + minutes + " " +
                     ((hours < 12) ? "AM" : "PM")
                     );
         };
@@ -212,8 +224,9 @@ $(document).ready(function () {
                 var city       = $location.attr("city");
                 var region     = $location.attr("region");
                 var country    = $location.attr("country");
+                console.log(result);
                 $("#weather")
-                        .append("<i class='icon-" + $condition.attr("code") + "'></i>")
+                        .html("<i class='icon-" + $condition.attr("code") + "'></i>")
                         .append("<h2>" + $condition.attr("temp") + "&deg;" + $units.attr("temperature") + "</h2>");
             },
             error: function (result) {
@@ -227,7 +240,7 @@ $(document).ready(function () {
      ********************/
     init = function () {
         loadBackground();
-        loadClock();
+        loadDayNTime();
         loadNotes();
         loadTodos();
         loadWeather();
