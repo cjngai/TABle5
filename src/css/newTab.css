@@ -33,6 +33,10 @@ ul li {
     word-wrap: break-word;
 }
 
+.body {
+    margin-bottom: 60px;
+}
+
 .footer {
     position: fixed;
     bottom: 0;
@@ -52,8 +56,7 @@ ul li {
     padding-bottom: 15px;
     max-height: 70vh;
     overflow-y: auto;
-    border-top-left-radius: 25px;
-    border-bottom-right-radius: 25px;
+    border-radius: 25px;
 }
 
 .notex,
@@ -95,29 +98,36 @@ textarea[id*='todo'] {
     -webkit-text-stroke-width: 1px;
 }
 
-/*********************
- * Don't touch       *
- * For Weather Stuff *
- *********************/
 #weather {
     float: right;
+    vertical-align: middle;
+    background-color: purple;
+    margin-top: 5px;
+    padding: 0px 20px;
+    border-radius: 50px;
 }
 
 #weather h2 {
-    color: #fff;
-    font-size: 100px;
+    display: inline-block;
+    color: #FFFFFF;
+    padding: 0px 3px;
+    font-size: 2.5em;
     font-weight: 300;
 }
 
 i {
-    color: #fff;
+    color: #FFFFFF;
     font-family: weather;
-    font-size: 150px;
+    font-size: 4em;
     font-weight: normal;
     font-style: normal;
     line-height: 1.0;
 }
 
+/*********************
+ * Don't touch       *
+ * For Weather Stuff *
+ *********************/
 .icon-0:before { content: ":"; }
 .icon-1:before { content: "p"; }
 .icon-2:before { content: "S"; }

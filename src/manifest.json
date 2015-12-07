@@ -3,7 +3,8 @@
     "description": "Making a useful new tab page.",
     "version": "1.0",
     "permissions": [
-        "storage"
+        "storage",
+        "http://*/"
     ],
     "chrome_url_overrides": {
         "newtab": "newTab.html"
