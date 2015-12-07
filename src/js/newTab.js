@@ -1,12 +1,8 @@
 $(document).ready(function () {
     var
-    /**************************
-     * Conway's Game Variable *
-     **************************/
-    game,
-    is_game = false,
-    latitude, longitude,
-    months = [
+    game,                   // Conway's game of life
+    is_game = false,        // Check if game is running
+    months = [              // Months [0-11]
         "Jan",
         "Feb",
         "Mar",
@@ -20,7 +16,7 @@ $(document).ready(function () {
         "Nov",
         "Dec"
     ],
-    dows = [
+    dows = [                // Days of the week[0-6]
         "Sun",
         "Mon",
         "Tues",
@@ -51,6 +47,9 @@ $(document).ready(function () {
         });
     },
 
+    /***********************
+     * Creates pencil icon *
+     ***********************/
     pencilIcon = function (c) {
         var $p = $("<span></span>");
         $p.attr({
@@ -60,6 +59,9 @@ $(document).ready(function () {
         return $p;
     },
 
+    /***********************
+     * Creates delete icon *
+     ***********************/
     deleteIcon = function (c) {
         var $x = $("<span></span>");
         $x.attr({
@@ -75,7 +77,6 @@ $(document).ready(function () {
     loadBackground = function () {
         chrome.storage.local.get(["backgroundImage", "backgroundColor", "gol"], function (result) {
             if (result.gol === "true") {
-                console.log(result);
                 gameOfLife();
             } else {
                 if (result.hasOwnProperty("backgroundImage")) {
@@ -224,13 +225,66 @@ $(document).ready(function () {
                 var city       = $location.attr("city");
                 var region     = $location.attr("region");
                 var country    = $location.attr("country");
-                console.log(result);
                 $("#weather")
                         .html("<i class='icon-" + $condition.attr("code") + "'></i>")
                         .append("<h2>" + $condition.attr("temp") + "&deg;" + $units.attr("temperature") + "</h2>");
             },
             error: function (result) {
-                alert("Failed");
+                alert("Weather Failed");
+            }
+        });
+    },
+    
+    /********************
+     * Initializes news *
+     ********************/
+    loadNews = function() {
+        $.ajax({
+            url: "http://rss.cnn.com/rss/cnn_topstories.rss",
+            dataType: "xml",
+            success: function (result) {
+                var $rss = $(result).children("rss").children("channel");
+                var title, link, thumbnail, description, pubdate;
+                var $v, $article;
+                $rss.children("item:lt(6)").each(function(index, value) {
+                    $v          = $(value);
+                    title       = $v.children("title").html();
+                    link        = $v.children("link").html();
+                    thumbnai    = $v.children("media\\:thumbnail").attr("url");
+                    description = $v.children("description").html().split("&lt;")[0];
+                    pubdate     = $v.children("pubdate").html();
+                    
+                    $article    = $("<article></article>");
+                    $title      = $("<h2></h2>");
+                    $thumb      = $("<img />");
+                    $desc       = $("<p></p>");
+                    $link       = $("<button></button>");
+                    
+                    $title.html(title);
+                    $thumb.attr({
+                        src: thumbnail,
+                        class: "newsThumbnail"
+                    });
+                    $desc.attr({
+                        class: "newsDescription"
+                    });
+                    $link.attr({
+                        class: "btn btn-info btn-sm newsLink",
+                        "data-link": link
+                    });
+                    $link.html("Link to Article");
+                    $desc.html(description);
+                    $article.html($title)
+                            .append($thumb);
+                    if(description.length !== 0) {
+                        $article.append($desc);
+                    }
+                    $article.append($link);
+                    $("#middle").append($article);
+                });
+            },
+            error: function (result) {
+                alert("News Failed");
             }
         });
     },
@@ -244,6 +298,7 @@ $(document).ready(function () {
         loadNotes();
         loadTodos();
         loadWeather();
+        loadNews();
     };
 
     init();
@@ -285,11 +340,11 @@ $(document).ready(function () {
      * Clicked add note *
      ********************/
     $("#addNote").on("click", function () {
-        var $li = $("<li></li>");
-        var $form = $("<form></form>");
+        var $li       = $("<li></li>");
+        var $form     = $("<form></form>");
         var $textarea = $("<textarea></textarea>");
-        var $save = $("<button></button>");
-        var $cancel = $("<button></button>");
+        var $save     = $("<button></button>");
+        var $cancel   = $("<button></button>");
         $li.attr({
             id: "noteContainer"
         });
@@ -326,10 +381,10 @@ $(document).ready(function () {
     $("#notes").on("click", "#saveNote", function () {
         chrome.storage.local.get("notes", function (result) {
             var notes = result.notes;
-            var note = escapeHtml(jQuery("#note").val());
+            var note  = escapeHtml(jQuery("#note").val());
+            var $li   = $("<li></li>");
             notes.push(note);
             saveChanges({"notes": notes});
-            var $li = $("<li></li>");
             $li.attr({
                 "data-index": (notes.length - 1)
             });
@@ -346,13 +401,13 @@ $(document).ready(function () {
      * Clicked edit note *
      *********************/
     $("#notes").on("click", ".notep", function () {
-        var $parent = $(this).parent();
-        var currNote = $parent.text();
-        $parent.data("note", currNote);
-        var $form = $("<form></form>");
+        var $parent   = $(this).parent();
+        var currNote  = $parent.text();
+        var $form     = $("<form></form>");
         var $textarea = $("<textarea></textarea>");
-        var $save = $("<button></button>");
-        var $cancel = $("<button></button>");
+        var $save     = $("<button></button>");
+        var $cancel   = $("<button></button>");
+        $parent.data("note", currNote);
         $textarea.attr({
             id: "note" + $parent.data("index"),
             rows: "4",
@@ -382,7 +437,7 @@ $(document).ready(function () {
      ***********************/
     $("#notes").on("click", "[class~='updateNote']", function () {
         var $parent = $(this).parent().parent();
-        var index = $parent.data("index");
+        var index   = $parent.data("index");
         chrome.storage.local.get("notes", function (result) {
             var notes = result.notes;
             var note = escapeHtml(jQuery("#note" + index).val());
@@ -408,7 +463,7 @@ $(document).ready(function () {
      ***************************/
     $("#notes").on("click", "[class~='cancelOldNote']", function () {
         var $parent = $(this).parent().parent();
-        var note = $parent.data("note");
+        var note    = $parent.data("note");
         $parent.html(note);
         $parent.append(deleteIcon("notex"));
         $parent.append(pencilIcon("notep"));
@@ -419,7 +474,7 @@ $(document).ready(function () {
      ***********************/
     $("#notes").on("click", ".notex", function () {
         var $parent = $(this).parent();
-        var index = $parent.data("index");
+        var index   = $parent.data("index");
         chrome.storage.local.get("notes", function (result) {
             var notes = result.notes;
             notes.splice(index, 1);
@@ -435,11 +490,11 @@ $(document).ready(function () {
      * Clicked add todo *
      ********************/
     $("#addTodo").on("click", function () {
-        var $li = $("<li></li>");
-        var $form = $("<form></form>");
+        var $li       = $("<li></li>");
+        var $form     = $("<form></form>");
         var $textarea = $("<textarea></textarea>");
-        var $save = $("<button></button>");
-        var $cancel = $("<button></button>");
+        var $save     = $("<button></button>");
+        var $cancel   = $("<button></button>");
         $li.attr({
             id: "todoContainer"
         });
@@ -476,10 +531,10 @@ $(document).ready(function () {
     $("#todos").on("click", "#saveTodo", function () {
         chrome.storage.local.get("todos", function (result) {
             var todos = result.todos;
-            var todo = escapeHtml(jQuery("#todo").val());
+            var todo  = escapeHtml(jQuery("#todo").val());
+            var $li   = $("<li></li>");
             todos.push(todo);
             saveChanges({"todos": todos});
-            var $li = $("<li></li>");
             $li.attr({
                 "data-index": (todos.length - 1)
             });
@@ -496,13 +551,13 @@ $(document).ready(function () {
      * Clicked edit todo *
      *********************/
     $("#todos").on("click", ".todop", function () {
-        var $parent = $(this).parent();
-        var currTodo = $parent.text();
-        $parent.data("todo", currTodo);
-        var $form = $("<form></form>");
+        var $parent   = $(this).parent();
+        var currTodo  = $parent.text();
+        var $form     = $("<form></form>");
         var $textarea = $("<textarea></textarea>");
-        var $save = $("<button></button>");
-        var $cancel = $("<button></button>");
+        var $save     = $("<button></button>");
+        var $cancel   = $("<button></button>");
+        $parent.data("todo", currTodo);
         $textarea.attr({
             id: "todo" + $parent.data("index"),
             rows: "4",
@@ -532,10 +587,10 @@ $(document).ready(function () {
      ***********************/
     $("#todos").on("click", "[class~='updateTodo']", function () {
         var $parent = $(this).parent().parent();
-        var index = $parent.data("index");
+        var index   = $parent.data("index");
         chrome.storage.local.get("todos", function (result) {
             var todos = result.todos;
-            var todo = escapeHtml(jQuery("#todo" + index).val());
+            var todo  = escapeHtml(jQuery("#todo" + index).val());
             todos[index] = todo;
             $parent.html(todo);
             $parent.append(deleteIcon("todox"));
@@ -558,7 +613,7 @@ $(document).ready(function () {
      ***************************/
     $("#todos").on("click", "[class~='cancelOldTodo']", function () {
         var $parent = $(this).parent().parent();
-        var note = $parent.data("todo");
+        var note    = $parent.data("todo");
         $parent.html(note);
         $parent.append(deleteIcon("todox"));
         $parent.append(pencilIcon("todop"));
@@ -569,7 +624,7 @@ $(document).ready(function () {
      ***********************/
     $("#todos").on("click", ".todox", function () {
         var $parent = $(this).parent();
-        var index = $parent.data()["index"];
+        var index   = $parent.data()["index"];
         chrome.storage.local.get("todos", function (result) {
             var todos = result.todos;
             todos.splice(index, 1);
@@ -579,5 +634,13 @@ $(document).ready(function () {
                 $(this).data("index", index);
             });
         });
+    });
+    
+    /******************************
+     * Clicked go to news article *
+     ******************************/
+    $("#middle").on("click", ".newsLink", function() {
+        var link = $(this).data("link");
+        window.location.href = link;
     });
 });
