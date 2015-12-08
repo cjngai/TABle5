@@ -26,7 +26,7 @@ There are multiple ways you can install the TABle5 extension.  Choose whichever 
 
 ### Using git
 
-With terminal or git client, use 'git clone https://github.com/cjngai/TABle5.git'.
+With terminal or git client, use `git clone https://github.com/cjngai/TABle5.git`.
 
 ![Chrome's extension settings](https://cloud.githubusercontent.com/assets/14128808/11644447/34d4288a-9d1a-11e5-803c-e6c3b8e2c436.png)
 
