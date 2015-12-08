@@ -97,4 +97,6 @@ However, you can refer to the [issues](https://github.com/cjngai/TABle5/issues) 
 
 TABle5 is free software released under the [MIT License](https://tldrlegal.com/license/mit-license).  Basically, you can do whatever you want with TABle5 as long as you include the original copyright and license notice in any copy of the software/source.
 
+Conway's Game of Life [implementation](https://github.com/nomatteus/conway-game-of-life-js) is also released under the MIT License.
+
 
