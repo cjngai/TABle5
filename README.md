@@ -19,6 +19,7 @@ All you need to use TABle5 is [Google Chrome](https://www.google.com/chrome/brow
   - [Notes](#notes)
 - [Removing TABle5](#removing-table5)
 - [Known Issues](#known-issues)
+- [Blog](#blog)
 - [License](#license)
 
 ## Installing TABle5
@@ -92,6 +93,10 @@ Find "TABle5" in your list of extensions, and click on the trash can icon to the
 
 TABle5 is still undergoing development and has not been released yet.  
 However, you can refer to the [issues](https://github.com/cjngai/TABle5/issues) page to see what other users have made note of.
+
+## Blog
+
+We've maintained this [blog](https://rcos.io/projects/cjngai/TABle5/blog) to record anecdotes throughout the process of developing TABle5.  This includes any bugs that we're actively working to correct, and the way we may have corrected any previous issues.
 
 ## License
 
