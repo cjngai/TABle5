@@ -225,8 +225,8 @@ $(document).ready(function () {
                 var city       = $location.attr("city");
                 var region     = $location.attr("region");
                 var country    = $location.attr("country");
-                $("#weather")
-                        .html("<i class='icon-" + $condition.attr("code") + "'></i>")
+                $("#weather").html("<h2>" + city +", " + region + "</h2>")
+                        .append("<i class='icon-" + $condition.attr("code") + "'></i>")
                         .append("<h2>" + $condition.attr("temp") + "&deg;" + $units.attr("temperature") + "</h2>");
             },
             error: function (result) {
@@ -250,7 +250,7 @@ $(document).ready(function () {
                     $v          = $(value);
                     title       = $v.children("title").html();
                     link        = $v.children("link").html();
-                    thumbnai    = $v.children("media\\:thumbnail").attr("url");
+                    thumbnail   = $v.children("media\\:thumbnail").attr("url");
                     description = $v.children("description").html().split("&lt;")[0];
                     pubdate     = $v.children("pubdate").html();
                     
