@@ -32,17 +32,17 @@ With terminal or git client, use `git clone https://github.com/cjngai/TABle5.git
 
 In your Chrome window, go to **chrome://extensions/**.  Make sure "Developer Mode" is enabled, as shown in the screenshot above.
 
-Click **Load unpacked extension**, which is highlighted in the screenshot above and navigate to the "TABle5" directory that you cloned.  Select the **src** folder inside the TABle5 directory.  The two screenshots below demonstrate what to do.
+Click **Load unpacked extension**, which is highlighted in the screenshot above and navigate to the "TABle5" directory that you cloned.  Select the **src** folder inside the TABle5 directory as shown below.
 
 ![Selecting the **src** folder](https://cloud.githubusercontent.com/assets/14128808/11644669/16fa89ce-9d1c-11e5-83b4-ec9d6e7bfde1.png)
 
-![You should see this after clicking **OK**](https://cloud.githubusercontent.com/assets/14128808/11644689/4077bc9a-9d1c-11e5-91b5-68d34241739b.png)
-
 ### Manual Download
 
-https://github.com/cjngai/TABle5/archive/master.zip
+You can simply download the latest release of TABle5 from the repository in archive (.ZIP) format [here](https://github.com/cjngai/TABle5/archive/master.zip).
 
+Extract the files to a given directory, and go to the Extensions settings of Chrome by visiting **chrome://extensions/**.
 
+Click **Load unpacked extension**, which is highlighted in the screenshot above and navigate to the "TABle5" directory that you downloaded.  Select the **src** folder inside the TABle5 directory.
 
 ## Customizing TABle5
 
