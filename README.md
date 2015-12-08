@@ -17,6 +17,7 @@ All you need to use TABle5 is [Google Chrome](https://www.google.com/chrome/brow
   - [Game of Life](#game-of-life)
 - [Using the Interface](#using-the-interface)
   - [Notes](#notes)
+- [Removing TABle5](#removing-table5)
 - [Known Issues](#known-issues)
 - [License](#license)
 
@@ -40,9 +41,9 @@ Click **Load unpacked extension**, which is highlighted in the screenshot above 
 
 You can simply download the latest release of TABle5 from the repository in archive (.ZIP) format [here](https://github.com/cjngai/TABle5/archive/master.zip).
 
-Extract the files to a given directory, and go to the Extensions settings of Chrome by visiting **chrome://extensions/**.
+Extract the files to a given directory, and go to the Extensions settings of Chrome by visiting **chrome://extensions/** in the browser.  Make sure you enable **Developer Mode** by using the checkbox at the top of the page.
 
-Click **Load unpacked extension**, which is highlighted in the screenshot above and navigate to the "TABle5" directory that you downloaded.  Select the **src** folder inside the TABle5 directory.
+Click **Load unpacked extension** and navigate to the "TABle5" directory that you downloaded.  Select the **src** folder inside the TABle5 directory.
 
 ## Customizing TABle5
 
@@ -76,6 +77,16 @@ Special characters that require HTML escaping, such as double quotes, are automa
 To add a note, simply click **Add Note**.  To save your note, click **Save**.
 
 If you would like to edit a note, hover over the note and click the (edit) button.  If you would like to delete a note, hover over the note and click the **X** button.
+
+## Removing TABle5
+
+:(
+
+Well, if you've had enough of TABle5, you can easily remove it.  Open Google Chrome and visit **chrome://extensions/**.
+
+Find "TABle5" in your list of extensions, and click on the trash can icon to the right of it.  Click "Remove" at the dialog box to confirm your decision.  Below is a screenshot of what this looks like.
+
+![](https://cloud.githubusercontent.com/assets/14128808/11650499/a12a0c06-9d57-11e5-918f-ab82dde7fd81.png)
 
 ## Known Issues
 
