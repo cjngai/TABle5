@@ -3,6 +3,11 @@ $(document).ready(function() {
     var changed = false;
     var attributes = {};
     
+    chrome.storage.local.get("backgroundColor", function (result) {
+        var bgcolor = result.backgroundColor;
+        jQuery("#backgroundColor").val(bgcolor);
+    });
+    
     chrome.storage.local.get("gol", function(result) {
         if(result.gol === "true") {
             $("#golon").attr("checked", true);
