@@ -140,6 +140,16 @@ textarea[id*='todo'] {
     font-weight: 300;
 }
 
+#settingsIcon {
+    background-image: url(../art/settings.png);
+    width: 30px;
+    height: 30px;
+}
+
+#settingsIcon:hover {
+    background-image: url(../art/settingsRO.png);
+}
+
 i {
     color: #FFFFFF;
     font-family: weather;
