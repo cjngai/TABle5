@@ -10,6 +10,8 @@ All you need to use TABle5 is [Google Chrome](https://www.google.com/chrome/brow
 
 - [Introduction](#table5)
 - [Installing TABle5](#installing-table5)
+  - [Using git](#using-git)
+  - [Manual Download](#manual-download)
 - [Customizing TABle5](#customizing-table5)
   - [Background Settings](#background-settings)
   - [Game of Life](#game-of-life)
@@ -19,6 +21,28 @@ All you need to use TABle5 is [Google Chrome](https://www.google.com/chrome/brow
 - [License](#license)
 
 ## Installing TABle5
+
+There are multiple ways you can install the TABle5 extension.  Choose whichever method suits your needs.  Essentially, you need to download the source and drag it into Google Chrome's extensions.  Future releases will be in Chrome's native extension package.
+
+### Using git
+
+With terminal or git client, use 'git clone https://github.com/cjngai/TABle5.git'.
+
+![Chrome's extension settings](https://cloud.githubusercontent.com/assets/14128808/11644447/34d4288a-9d1a-11e5-803c-e6c3b8e2c436.png)
+
+In your Chrome window, go to [chrome://extensions/](chrome://extensions/).  Make sure "Developer Mode" is enabled, as shown in the screenshot above.
+
+Click **Load unpacked extension**, which is highlighted in the screenshot above and navigate to the "TABle5" directory that you cloned.  Select the **src** folder inside the TABle5 directory.  The two screenshots below demonstrate what to do.
+
+![Selecting the **src** folder](https://cloud.githubusercontent.com/assets/14128808/11644669/16fa89ce-9d1c-11e5-83b4-ec9d6e7bfde1.png)
+
+![You should see this after clicking **OK**](https://cloud.githubusercontent.com/assets/14128808/11644689/4077bc9a-9d1c-11e5-91b5-68d34241739b.png)
+
+### Manual Download
+
+https://github.com/cjngai/TABle5/archive/master.zip
+
+
 
 ## Customizing TABle5
 
