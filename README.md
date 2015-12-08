@@ -30,7 +30,7 @@ With terminal or git client, use `git clone https://github.com/cjngai/TABle5.git
 
 ![Chrome's extension settings](https://cloud.githubusercontent.com/assets/14128808/11644447/34d4288a-9d1a-11e5-803c-e6c3b8e2c436.png)
 
-In your Chrome window, go to [chrome://extensions/](chrome://extensions/).  Make sure "Developer Mode" is enabled, as shown in the screenshot above.
+In your Chrome window, go to **chrome://extensions/**.  Make sure "Developer Mode" is enabled, as shown in the screenshot above.
 
 Click **Load unpacked extension**, which is highlighted in the screenshot above and navigate to the "TABle5" directory that you cloned.  Select the **src** folder inside the TABle5 directory.  The two screenshots below demonstrate what to do.
 
