@@ -80,6 +80,7 @@ If you would like to edit a note, hover over the note and click the (edit) butto
 ## Known Issues
 
 TABle5 is still undergoing development and has not been released yet.  
+However, you can refer to the [issues](https://github.com/cjngai/TABle5/issues) page to see what other users have made note of.
 
 ## License
 
