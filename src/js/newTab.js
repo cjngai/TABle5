@@ -211,27 +211,35 @@ $(document).ready(function () {
      * Initializes weather *
      ***********************/
     loadWeather = function () {
-        $.ajax({
-            url: "http://weather.yahooapis.com/forecastrss?p=12180&u=f",
-            dataType: "xml",
-            success: function (result) {
-                var $rss       = $(result).children("rss").children("channel");
-                var $location  = $rss.children("yweather\\:location");           // attributes[city, region, country]
-                var $units     = $rss.children("yweather\\:units");              // attributes[temperature, distance, pressure, speed]
-                var $wind      = $rss.children("yweather\\:wind");               // attributes[chill, direction, speed]
-                var $astronomy = $rss.children("yweather\\:astronomy");          // attributes[sunrise, sunset]
-                var $weather   = $rss.children("item");                          // children[yweather:forecast[5], geo:lat, geo:long, condition]
-                var $condition = $weather.children("yweather\\:condition");      // attributes[text, code, temp, date]
-                var city       = $location.attr("city");
-                var region     = $location.attr("region");
-                var country    = $location.attr("country");
-                $("#weather").html("<h2>" + city +", " + region + "</h2>")
-                        .append("<i class='icon-" + $condition.attr("code") + "'></i>")
-                        .append("<h2>" + $condition.attr("temp") + "&deg;" + $units.attr("temperature") + "</h2>");
-            },
-            error: function (result) {
-                alert("Weather Failed");
+        chrome.storage.local.get("zipCode", function (result) {
+            var zipCode;
+            if(result.hasOwnProperty("zipCode") && result.zipCode !== "" && result.zipCode.length === 5) {
+                zipCode = result.zipCode;
+            } else {
+                zipCode = "12180";
             }
+            $.ajax({
+                url: "http://weather.yahooapis.com/forecastrss?p=" + zipCode +"&u=f",
+                dataType: "xml",
+                success: function (result) {
+                    var $rss       = $(result).children("rss").children("channel");
+                    var $location  = $rss.children("yweather\\:location");           // attributes[city, region, country]
+                    var $units     = $rss.children("yweather\\:units");              // attributes[temperature, distance, pressure, speed]
+                    var $wind      = $rss.children("yweather\\:wind");               // attributes[chill, direction, speed]
+                    var $astronomy = $rss.children("yweather\\:astronomy");          // attributes[sunrise, sunset]
+                    var $weather   = $rss.children("item");                          // children[yweather:forecast[5], geo:lat, geo:long, condition]
+                    var $condition = $weather.children("yweather\\:condition");      // attributes[text, code, temp, date]
+                    var city       = $location.attr("city");
+                    var region     = $location.attr("region");
+                    var country    = $location.attr("country");
+                    $("#weather").html("<h2>" + city +", " + region + "</h2>")
+                            .append("<i class='icon-" + $condition.attr("code") + "'></i>")
+                            .append("<h2>" + $condition.attr("temp") + "&deg;" + $units.attr("temperature") + "</h2>");
+                },
+                error: function (result) {
+                    alert("Weather Failed");
+                }
+            });
         });
     },
     

@@ -24,6 +24,13 @@ $(document).ready(function() {
         }
     });
     
+    chrome.storage.local.get("zipCode", function (result) {
+        if(result.hasOwnProperty("zipCode")) {
+            $("#zipCode").val(result.zipCode);
+            $("#zipCode").data("original", result.zipCode);
+        }
+    });
+    
     /************************
      * Reader read the file *
      ************************/
@@ -82,5 +89,18 @@ $(document).ready(function() {
     $("#destroyChanges").on("click", function(e) {
         e.preventDefault();
         window.location.href = "newTab.html"; // Redirects to newtab
+    });
+    
+    /********************
+     * Changed zip code *
+     ********************/
+    $("#zipCode").on("change", function() {
+        if($(this).val() !== $(this).data("original")) {
+            changed = true;
+            attributes.zipCode = $(this).val();
+        } else {
+            changed = false;
+            attributes.zipCode = $(this).data("original");
+        }
     });
 });
