@@ -12,7 +12,8 @@ $(document).ready(function() {
         var bgcolor = result.backgroundColor;
         jQuery("#backgroundColor").val(bgcolor);
         if(result.hasOwnProperty("backgroundImage")) {
-            
+            jQuery("#backgroundPrev").css("background-image", "url(" + result.backgroundImage + ")");
+            jQuery("#backgroundPrev").show();
         }
     });
     
@@ -94,7 +95,7 @@ $(document).ready(function() {
     /********************
      * Changed zip code *
      ********************/
-    $("#zipCode").on("change", function() {
+    $("#zipCode").keyup(function() {
         if($(this).val() !== $(this).data("original")) {
             changed = true;
             attributes.zipCode = $(this).val();
