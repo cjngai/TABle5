@@ -20,11 +20,14 @@
                     <nav class="bs-docs-sidebar affix">
                         <h3>Settings</h3>
                         <ul class="nav bs-docs-sidenav">
-                            <li class>
+                            <li>
                                 <a href="#background">Background</a>
                             </li>
-                            <li class>
-                                <a href="#links">Links</a>
+                            <li>
+                                <a href="#weather">Weather</a>
+                            </li>
+                            <li>
+                                <a href="#clear">Clear</a>
                             </li>
                         </ul>
                     </nav>
@@ -43,9 +46,12 @@
                         <input type="radio" name="gol" value="false" id="goloff" />
                         <label for="goloff">Off</label>
                     </div>
-                    <div class="row" id="links">
-                        <h1>Links...</h1>
-                        <a href="#">Some links</a>
+                    <div class="row" id="weather">
+                        <h1>Weather</h1>
+                        <input type="text" size="8" maxlength="5" id="zipCode" placeholder="Zip Code" />
+                    </div>
+                    <div class="row" id="clear">
+                        <h1>Clear Data</h1>
                     </div>
                     <div class="row">
                         <div class="btn btn-primary" id="save">Save</div>

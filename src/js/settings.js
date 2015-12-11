@@ -1,11 +1,19 @@
 $(document).ready(function() {
-    var reader = new FileReader();
-    var changed = false;
-    var attributes = {};
+    var
+    reader = new FileReader(),
+    changed = false,
+    attributes = {},
     
-    chrome.storage.local.get("backgroundColor", function (result) {
+    saveChanges = function(attr, callBack) {
+        chrome.storage.local.set(attr, callBack);
+    };
+    
+    chrome.storage.local.get(["backgroundColor", "backgroundImage"], function (result) {
         var bgcolor = result.backgroundColor;
         jQuery("#backgroundColor").val(bgcolor);
+        if(result.hasOwnProperty("backgroundImage")) {
+            
+        }
     });
     
     chrome.storage.local.get("gol", function(result) {
@@ -53,7 +61,7 @@ $(document).ready(function() {
      **********************************/
     $("#save").on("click", function(e) {
         e.preventDefault();
-        chrome.storage.local.set(attributes, function() {
+        saveChanges(attributes, function() {
             window.location.href = "newTab.html"; // Redirects to newtab
         });
     });

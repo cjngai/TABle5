@@ -246,7 +246,7 @@ $(document).ready(function () {
                 var $rss = $(result).children("rss").children("channel");
                 var title, link, thumbnail, description, pubdate;
                 var $v, $article;
-                $rss.children("item:lt(6)").each(function(index, value) {
+                $rss.children("item:lt(5)").each(function(index, value) {
                     $v          = $(value);
                     title       = $v.children("title").html();
                     link        = $v.children("link").html();
@@ -311,11 +311,8 @@ $(document).ready(function () {
     /*********************
      * Saves all changes *
      *********************/
-    var saveChanges = function (attributes) {
-        chrome.storage.local.set(attributes, function () {
-            // Saved changes callback
-            // Nothing to see here
-        });
+    var saveChanges = function (attributes, callBack) {
+        chrome.storage.local.set(attributes, callBack);
     };
 
     /*******************************
@@ -339,7 +336,8 @@ $(document).ready(function () {
     /********************
      * Clicked add note *
      ********************/
-    $("#addNote").on("click", function () {
+    $("#addNote").on("click", function (e) {
+        e.preventDefault();
         var $li       = $("<li></li>");
         var $form     = $("<form></form>");
         var $textarea = $("<textarea></textarea>");
@@ -378,7 +376,8 @@ $(document).ready(function () {
     /*********************
      * Clicked save note *
      *********************/
-    $("#notes").on("click", "#saveNote", function () {
+    $("#notes").on("click", "#saveNote", function (e) {
+        e.preventDefault();
         chrome.storage.local.get("notes", function (result) {
             var notes = result.notes;
             var note  = escapeHtml(jQuery("#note").val());
@@ -400,7 +399,8 @@ $(document).ready(function () {
     /*********************
      * Clicked edit note *
      *********************/
-    $("#notes").on("click", ".notep", function () {
+    $("#notes").on("click", ".notep", function (e) {
+        e.preventDefault();
         var $parent   = $(this).parent();
         var currNote  = $parent.text();
         var $form     = $("<form></form>");
@@ -435,7 +435,8 @@ $(document).ready(function () {
     /***********************
      * Clicked update note *
      ***********************/
-    $("#notes").on("click", "[class~='updateNote']", function () {
+    $("#notes").on("click", "[class~='updateNote']", function (e) {
+        e.preventDefault();
         var $parent = $(this).parent().parent();
         var index   = $parent.data("index");
         chrome.storage.local.get("notes", function (result) {
@@ -452,7 +453,8 @@ $(document).ready(function () {
     /***************************
      * Clicked cancel new note *
      ***************************/
-    $("#notes").on("click", "[class~='cancelNewNote']", function () {
+    $("#notes").on("click", "[class~='cancelNewNote']", function (e) {
+        e.preventDefault();
         var $parent = $(this).parent().parent();
         $parent.remove();
         $("#editNoteButton").show();
@@ -461,7 +463,8 @@ $(document).ready(function () {
     /***************************
      * Clicked cancel old todo *
      ***************************/
-    $("#notes").on("click", "[class~='cancelOldNote']", function () {
+    $("#notes").on("click", "[class~='cancelOldNote']", function (e) {
+        e.preventDefault();
         var $parent = $(this).parent().parent();
         var note    = $parent.data("note");
         $parent.html(note);
@@ -472,7 +475,8 @@ $(document).ready(function () {
     /***********************
      * Clicked delete note *
      ***********************/
-    $("#notes").on("click", ".notex", function () {
+    $("#notes").on("click", ".notex", function (e) {
+        e.preventDefault();
         var $parent = $(this).parent();
         var index   = $parent.data("index");
         chrome.storage.local.get("notes", function (result) {
@@ -489,7 +493,8 @@ $(document).ready(function () {
     /********************
      * Clicked add todo *
      ********************/
-    $("#addTodo").on("click", function () {
+    $("#addTodo").on("click", function (e) {
+        e.preventDefault();
         var $li       = $("<li></li>");
         var $form     = $("<form></form>");
         var $textarea = $("<textarea></textarea>");
@@ -528,7 +533,8 @@ $(document).ready(function () {
     /*********************
      * Clicked save todo *
      *********************/
-    $("#todos").on("click", "#saveTodo", function () {
+    $("#todos").on("click", "#saveTodo", function (e) {
+        e.preventDefault();
         chrome.storage.local.get("todos", function (result) {
             var todos = result.todos;
             var todo  = escapeHtml(jQuery("#todo").val());
@@ -550,7 +556,8 @@ $(document).ready(function () {
     /*********************
      * Clicked edit todo *
      *********************/
-    $("#todos").on("click", ".todop", function () {
+    $("#todos").on("click", ".todop", function (e) {
+        e.preventDefault();
         var $parent   = $(this).parent();
         var currTodo  = $parent.text();
         var $form     = $("<form></form>");
@@ -585,7 +592,8 @@ $(document).ready(function () {
     /***********************
      * Clicked update todo *
      ***********************/
-    $("#todos").on("click", "[class~='updateTodo']", function () {
+    $("#todos").on("click", "[class~='updateTodo']", function (e) {
+        e.preventDefault();
         var $parent = $(this).parent().parent();
         var index   = $parent.data("index");
         chrome.storage.local.get("todos", function (result) {
@@ -602,7 +610,8 @@ $(document).ready(function () {
     /***************************
      * Clicked cancel new todo *
      ***************************/
-    $("#todos").on("click", "[class~='cancelNewTodo']", function () {
+    $("#todos").on("click", "[class~='cancelNewTodo']", function (e) {
+        e.preventDefault();
         var $parent = $(this).parent().parent();
         $parent.remove();
         $("#editTodoButton").show();
@@ -611,7 +620,8 @@ $(document).ready(function () {
     /***************************
      * Clicked cancel old todo *
      ***************************/
-    $("#todos").on("click", "[class~='cancelOldTodo']", function () {
+    $("#todos").on("click", "[class~='cancelOldTodo']", function (e) {
+        e.preventDefault();
         var $parent = $(this).parent().parent();
         var note    = $parent.data("todo");
         $parent.html(note);
@@ -622,7 +632,8 @@ $(document).ready(function () {
     /***********************
      * Clicked delete todo *
      ***********************/
-    $("#todos").on("click", ".todox", function () {
+    $("#todos").on("click", ".todox", function (e) {
+        e.preventDefault();
         var $parent = $(this).parent();
         var index   = $parent.data()["index"];
         chrome.storage.local.get("todos", function (result) {
@@ -636,11 +647,12 @@ $(document).ready(function () {
         });
     });
     
-    /******************************
-     * Clicked go to news article *
-     ******************************/
-    $("#middle").on("click", ".newsLink", function() {
+    /*****************************
+     * Clicked goto news article *
+     *****************************/
+    $("#middle").on("click", ".newsLink", function(e) {
+        e.preventDefault();
         var link = $(this).data("link");
-        window.location.href = link;
+        window.open(link);
     });
 });
